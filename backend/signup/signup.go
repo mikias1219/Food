@@ -52,8 +52,8 @@ func generateVerificationCode() string {
 func sendEmail(email, verificationCode string) error {
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
-	smtpUser := "telaynew11@gmail.com"
-	smtpPass := "kerpgqurcvdgzdtu"
+	smtpUser := "mikiyasabate003@gmail.com"
+	smtpPass := "spjd fsnz xhgy cgqe"
 
 	from := smtpUser
 	to := []string{email}

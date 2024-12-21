@@ -27,13 +27,13 @@ type EventPayload struct {
 // sendEmailnotify sends an email notification
 func sendEmailnotify(email string) error {
 	m := gomail.NewMessage()
-	m.SetHeader("From", "telaynew11@gmail.com")
+	m.SetHeader("From", "mikiyasabate003@gmail.com")
 	m.SetHeader("To", email)
 	m.SetHeader("Subject", "Registration Successful")
 	m.SetBody("text/plain", "Congratulations! Your registration is now verified.")
 
 	// Replace "kerp gqur cvdg zdtu" with your app password or appropriate credentials
-	d := gomail.NewDialer("smtp.gmail.com", 587, "telaynew11@gmail.com", "kerp gqur cvdg zdtu")
+	d := gomail.NewDialer("smtp.gmail.com", 587, "mikiyasabate003@gmail.com", "spjd fsnz xhgy cgqe")
 
 	if err := d.DialAndSend(m); err != nil {
 		return err

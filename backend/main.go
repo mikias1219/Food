@@ -17,9 +17,9 @@ import (
 func connectToDatabase() (*sql.DB, error) {
 	dbHost := "localhost"
 	dbPort := "5431"
-	dbUser := "telay"
-	dbPassword := "123456"
-	dbName := "uog"
+	dbUser := "miki"
+	dbPassword := "1219"
+	dbName := "miki"
 
 	// Connection string (DSN)
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
