@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: po_con
+    environment:
+      POSTGRES_USER: miki
+      POSTGRES_PASSWORD: 1219
+      POSTGRES_DB: miki
+    ports:
+      - "5431:5432"
+
+  hasura:
+    image: hasura/graphql-engine:latest
+    container_name: hasura_container
+    depends_on:
+      - postgres
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://miki:1219@postgres:5432/miki
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: miki1219
+    ports:
+      - "8083:8080"
+    restart: always
