@@ -1,32 +1,32 @@
-import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { mkdirSync } from 'node:fs';
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, setResponseHeaders, createError, getRouterParam, getQuery as getQuery$1, readBody, getResponseStatusText } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/h3@1.13.0/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
+import { mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parentPort, threadId } from 'node:worker_threads';
-import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, setResponseHeaders, createError, getRouterParam, getQuery as getQuery$1, readBody, getResponseStatusText } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/h3/dist/index.mjs';
-import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { stringify, uneval } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/devalue/index.js';
-import destr from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/destr/dist/index.mjs';
-import { withQuery, joinURL, withTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/vue/server-renderer/index.mjs';
-import { propsToString, renderSSRHead } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/@unhead/ssr/dist/index.mjs';
-import { createServerHead as createServerHead$1, CapoPlugin } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/unhead/dist/index.mjs';
-import { klona } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/scule/dist/index.mjs';
-import { createHooks } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/hookable/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/ofetch/dist/node.mjs';
-import { createCall, createFetch } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/unenv/runtime/fetch/index.mjs';
+import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/vue-bundle-renderer@2.1.1/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { stringify, uneval } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/devalue@5.1.1/node_modules/devalue/index.js';
+import destr from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/destr@2.0.3/node_modules/destr/dist/index.mjs';
+import { withQuery, joinURL, withTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/ufo@1.5.4/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/vue@3.5.13_typescript@5.7.2/node_modules/vue/server-renderer/index.mjs';
+import { propsToString, renderSSRHead } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/@unhead+ssr@1.11.14/node_modules/@unhead/ssr/dist/index.mjs';
+import { createHooks } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/ofetch@1.4.1/node_modules/ofetch/dist/node.mjs';
+import { createCall, createFetch } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/unenv@1.10.0/node_modules/unenv/runtime/fetch/index.mjs';
+import { klona } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/defu@6.1.4/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/unstorage@1.14.1_db0@0.2.1_ioredis@5.4.2/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/unstorage@1.14.1_db0@0.2.1_ioredis@5.4.2/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
+import { getContext } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { consola } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/consola/dist/index.mjs';
-import { getContext } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/errx/dist/index.js';
-import { isVNode, version, unref } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/vue/index.mjs';
-import { hash } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/ohash/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/unstorage/drivers/fs.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/radix3/dist/index.mjs';
-import { defineHeadPlugin } from 'file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/node_modules/@unhead/shared/dist/index.mjs';
+import { consola } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/consola@3.3.0/node_modules/consola/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
+import { isVNode, version, unref } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/vue@3.5.13_typescript@5.7.2/node_modules/vue/index.mjs';
+import { hash } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/ohash@1.1.4/node_modules/ohash/dist/index.mjs';
+import { createServerHead as createServerHead$1, CapoPlugin } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/unhead@1.11.14/node_modules/unhead/dist/index.mjs';
+import { defineHeadPlugin } from 'file:///home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/@unhead+shared@1.11.14/node_modules/@unhead/shared/dist/index.mjs';
 
 function hasReqHeader(event, name, includes) {
   const value = getRequestHeader(event, name);
@@ -172,13 +172,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _MQZEC3p43j = (function(nitro) {
+const _UH6QgVa6A4 = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "C:/Users/telay/Desktop/my-fullstack-app/nuxt3";
+const rootDir = "/home/mikias/Desktop/food-recipe/nuxt3";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"FOOD Recipe"};
 
@@ -197,7 +197,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _9hafUwBbEV = (nitroApp) => {
+const _74RSXvFLGl = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -267,18 +267,18 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _MQZEC3p43j,
-_9hafUwBbEV
+  _UH6QgVa6A4,
+_74RSXvFLGl
 ];
 
-const _lazy_thYchk = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_LX2qr9 = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_thYchk, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_thYchk, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_error', handler: _lazy_LX2qr9, lazy: true, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_LX2qr9, lazy: true, middleware: false, method: undefined }
 ];
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/telay/Desktop/my-fullstack-app/nuxt3/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/mikias/Desktop/food-recipe/nuxt3/server/assets"}];
 
 const assets = createStorage();
 
@@ -290,11 +290,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\telay\\Desktop\\my-fullstack-app\\nuxt3","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\telay\\Desktop\\my-fullstack-app\\nuxt3\\server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\telay\\Desktop\\my-fullstack-app\\nuxt3\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\telay\\Desktop\\my-fullstack-app\\nuxt3\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\telay\\Desktop\\my-fullstack-app\\nuxt3\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/mikias/Desktop/food-recipe/nuxt3","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/mikias/Desktop/food-recipe/nuxt3/server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/mikias/Desktop/food-recipe/nuxt3/.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/mikias/Desktop/food-recipe/nuxt3/.nuxt/cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/mikias/Desktop/food-recipe/nuxt3/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -751,6 +751,11 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
+getContext("nitro-app", {
+  asyncContext: false,
+  AsyncLocalStorage: void 0
+});
+
 const config = useRuntimeConfig();
 const _routeRulesMatcher = toRouteMatcher(
   createRouter({ routes: config.nitro.routeRules })
@@ -1161,8 +1166,8 @@ function publicAssetsURL(...path) {
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
-const getClientManifest = () => import('file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file://C:/Users/telay/Desktop/my-fullstack-app/nuxt3/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file:///home/mikias/Desktop/food-recipe/nuxt3/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file:///home/mikias/Desktop/food-recipe/nuxt3/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();
@@ -1308,7 +1313,7 @@ const renderer = defineRenderHandler(async (event) => {
   if (inlinedStyles.length) {
     head.push({ style: inlinedStyles });
   }
-  if (!isRenderingIsland || true) {
+  {
     const link = [];
     for (const resource of Object.values(styles)) {
       if ("inline" in getQuery(resource.file)) {

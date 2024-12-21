@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const uploadLink = createUploadLink({
     uri: 'http://localhost:8083/v1/graphql', // Your GraphQL endpoint
     headers: {
-      'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET || 'Telay5870@',
+      'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET || 'miki1219',
     },
   });
 

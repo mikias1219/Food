@@ -30,7 +30,7 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { injectHead, useHead, useSeoMeta, useHeadSafe, useServerHead, useServerSeoMeta, useServerHeadSafe } from '@unhead/vue';
 export { useAuth } from '../composables/useAuth';
 export { gql } from 'graphql-tag';
-export { useApollo, useAsyncQuery, useLazyAsyncQuery } from '../node_modules/@nuxtjs/apollo/dist/runtime/composables';
+export { useApollo, useAsyncQuery, useLazyAsyncQuery } from '../node_modules/.pnpm/@nuxtjs+apollo@5.0.0-alpha.14_magicast@0.3.5_rollup@4.29.1_typescript@5.7.2_vue@3.5.13_typescript@5.7.2_/node_modules/@nuxtjs/apollo/dist/runtime/composables';
 export { useQuery, useLazyQuery, useMutation, useSubscription, useApolloClient, useQueryLoading, useMutationLoading, useSubscriptionLoading, useGlobalQueryLoading, useGlobalMutationLoading, useGlobalSubscriptionLoading } from '@vue/apollo-composable';
-export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
-export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';
+export { useNuxtDevTools } from '../node_modules/.pnpm/@nuxt+devtools@1.6.4_rollup@4.29.1_vite@5.4.11_@types+node@22.10.2_terser@5.37.0__vue@3.5.13_typescript@5.7.2_/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
+export { definePageMeta } from '../node_modules/.pnpm/nuxt@3.14.1592_@parcel+watcher@2.5.0_@types+node@22.10.2_db0@0.2.1_ioredis@5.4.2_magicast@0.3_u6w6bfl6lbihjtk7bo2jqob3we/node_modules/nuxt/dist/pages/runtime/composables';
