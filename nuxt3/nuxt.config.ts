@@ -8,6 +8,10 @@ export default defineNuxtConfig({
   // Modules
   modules: ['@nuxtjs/apollo'],
 
+  axios: {
+    baseURL: 'http://127.0.0.1:8000',
+  },
+
   // Apollo Client Configuration
   apollo: {
     clients: {
@@ -16,7 +20,7 @@ export default defineNuxtConfig({
         // Include the Admin Secret in the headers
         httpLinkOptions: {
           headers: {
-            'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET || 'Telay5870@', // Use environment variable
+            'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET || 'miki1219', // Use environment variable
           },
         },
       },

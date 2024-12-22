@@ -4,14 +4,45 @@ import (
 	"backend/image"
 	"backend/login"
 	"backend/notify"
+	"backend/payment"
 	"backend/signup"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
 	_ "github.com/lib/pq" // PostgreSQL driver
 )
+
+func PaymentHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Parse the request
+	var paymentRequest payment.ChapaPaymentRequest
+	if err := json.NewDecoder(r.Body).Decode(&paymentRequest); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	// Chapa API Key
+	apiKey := "CHASECK_TEST-GdLwnDgIq11gkolK98FSWSjgJSMSamrY" // Replace with your actual API key
+
+	// Initialize payment
+	checkoutURL, err := payment.InitiatePayment(apiKey, paymentRequest)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Payment initialization failed: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Respond with the checkout URL
+	response := map[string]string{"checkout_url": checkoutURL}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
 
 // connectToDatabase establishes a connection to the PostgreSQL database
 func connectToDatabase() (*sql.DB, error) {
@@ -61,7 +92,7 @@ func main() {
 	http.HandleFunc("/verify", func(w http.ResponseWriter, r *http.Request) {
 		signup.VerifyHandler(w, r, db)
 	})
-
+	http.HandleFunc("/payment", PaymentHandler)
 	// Start the server
 	log.Println("Starting server on http://localhost:8085")
 	err = http.ListenAndServe(":8085", nil)

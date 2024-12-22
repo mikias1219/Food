@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "/home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/nuxt@3.14.1592_@parcel+watcher@2.5.0_@types+node@22.10.2_db0@0.2.1_ioredis@5.4.2_magicast@0.3_u6w6bfl6lbihjtk7bo2jqob3we/node_modules/nuxt/dist/app/entry.js": {
+  "/home/mikias/MyFiles/Projects/Personal/SideProjects/ my food recipe/nuxt3/node_modules/.pnpm/nuxt@3.14.1592_@parcel+watcher@2.5.0_@types+node@22.10.2_db0@0.2.1_ioredis@5.4.2_magicast@0.3_u6w6bfl6lbihjtk7bo2jqob3we/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "/home/mikias/Desktop/food-recipe/nuxt3/node_modules/.pnpm/nuxt@3.14.1592_@parcel+watcher@2.5.0_@types+node@22.10.2_db0@0.2.1_ioredis@5.4.2_magicast@0.3_u6w6bfl6lbihjtk7bo2jqob3we/node_modules/nuxt/dist/app/entry.js"
+    "file": "/home/mikias/MyFiles/Projects/Personal/SideProjects/ my food recipe/nuxt3/node_modules/.pnpm/nuxt@3.14.1592_@parcel+watcher@2.5.0_@types+node@22.10.2_db0@0.2.1_ioredis@5.4.2_magicast@0.3_u6w6bfl6lbihjtk7bo2jqob3we/node_modules/nuxt/dist/app/entry.js"
   }
 }
