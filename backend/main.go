@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	_ "github.com/lib/pq" // PostgreSQL driver
 )
@@ -44,28 +45,30 @@ func PaymentHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// connectToDatabase establishes a connection to the PostgreSQL database
 func connectToDatabase() (*sql.DB, error) {
-	dbHost := "localhost"
-	dbPort := "5431"
+	dbHost := "postgres"
+	dbPort := "5432"
 	dbUser := "miki"
 	dbPassword := "1219"
 	dbName := "miki"
 
-	// Connection string (DSN)
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
 
-	// Initialize database connection
-	db, err := sql.Open("postgres", dsn)
-	if err != nil {
-		return nil, fmt.Errorf("failed to connect to database: %w", err)
-	}
+	var db *sql.DB
+	var err error
 
-	// Test database connection
-	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("database connection error: %w", err)
+	// Retry logic for database connection
+	for i := 0; i < 10; i++ {
+		db, err = sql.Open("postgres", dsn)
+		if err == nil {
+			if err = db.Ping(); err == nil {
+				return db, nil
+			}
+		}
+		log.Printf("Retrying database connection in 5 seconds (%d/10)...", i+1)
+		time.Sleep(5 * time.Second)
 	}
-	return db, nil
+	return nil, fmt.Errorf("failed to connect to database after retries: %w", err)
 }
 
 func main() {

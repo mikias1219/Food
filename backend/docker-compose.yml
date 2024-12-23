@@ -10,12 +10,15 @@ services:
       POSTGRES_DB: miki
     ports:
       - "5431:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Add a volume to persist data
 
   hasura:
     image: hasura/graphql-engine:latest
     container_name: hasura_container
     depends_on:
       - postgres
+      - webhook
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://miki:1219@postgres:5432/miki
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
@@ -23,3 +26,16 @@ services:
     ports:
       - "8083:8080"
     restart: always
+
+  webhook:
+    build:
+      context: . # Current directory containing the Dockerfile
+    container_name: webhook_container
+    depends_on:
+      - postgres
+    ports:
+      - "8085:8085"
+    restart: always
+
+volumes:
+  postgres_data: # Declare a named volume
