@@ -149,14 +149,17 @@
                       My Profile
                     </button>
                   </li>
-                  <li>
-                    <button
-                      class="w-full px-4 py-2 text-red-500 hover:bg-gray-100 text-left"
-                      @click="navigateTo('/login')"
-                    >
-                      Logout
-                    </button>
-                  </li>
+                  <!-- Inside the Dropdown Menu for 'My Account' -->
+<li>
+  <button
+    class="w-full px-4 py-2 text-red-500 hover:bg-gray-100 text-left"
+    @click="logout"
+  >
+    Logout
+  </button>
+</li>
+
+                 
                 </ul>
               </div>
             </div>
@@ -206,4 +209,13 @@ const applyFilter = (filterType) => {
 const searchRecipes = () => {
   console.log(`Searching for: ${searchQuery.value}`);
 };
+
+const logout = () => {
+  // Clear authentication data (e.g., session, token)
+  authStore.logout(); // Assuming your store has a logout action that handles this
+
+  // Redirect to login page
+  navigateTo('/login');
+};
+
 </script>
