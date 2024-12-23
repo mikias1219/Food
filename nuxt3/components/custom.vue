@@ -9,15 +9,17 @@
         <h2 class="text-2xl font-bold mb-4">{{ recipe.title }}</h2>
 
         <!-- Recipe Image -->
-        <img 
-          v-if="recipe.featured_image"
-          :src="getImageUrl(recipe.featured_image)"
-          alt="Recipe Image"
-          class="w-full h-500 object-cover rounded-lg mb-4"
-        />
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <img 
+            v-if="recipe.featured_image"
+            :src="getImageUrl(recipe.featured_image)"
+            alt="Recipe Image"
+            class="w-full h-40 object-cover rounded-lg mb-4"
+          />
+        </div>
 
         <!-- Buttons Section -->
-        <div class="flex justify-start gap-6 mb-4 items-center">
+        <div class="flex flex-wrap justify-start gap-6 mb-4 items-center">
           <!-- Like Button -->
           <button
             @click="handleLike(index)"
@@ -41,46 +43,44 @@
 
           <!-- Bookmark Button -->
           <button
-  @click="handleBookmark(index)"
-  :class="{ 'text-yellow-500': recipe.bookmarked, 'text-gray-600': !recipe.bookmarked }"
-  class="flex items-center space-x-2"
->
-  <span>🔖</span>
-  <span>{{ recipe.bookmarked ? 'Bookmarked' : 'Bookmark' }}</span>
-</button>
-<button
-  @click="redirectToPaymentPage(recipe)"
-  class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full transition duration-200 hover:bg-green-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400"
->
-  Buy Recipe
-</button>
+            @click="handleBookmark(index)"
+            :class="{ 'text-yellow-500': recipe.bookmarked, 'text-gray-600': !recipe.bookmarked }"
+            class="flex items-center space-x-2"
+          >
+            <span>🔖</span>
+            <span>{{ recipe.bookmarked ? 'Bookmarked' : 'Bookmark' }}</span>
+          </button>
 
+          <!-- Buy Recipe Button -->
+          <button
+            @click="redirectToPaymentPage(recipe)"
+            class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full transition duration-200 hover:bg-green-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400"
+          >
+            Buy Recipe
+          </button>
+        </div>
 
-          <!-- Rating Section -->
-          <div class="flex items-center space-x-1">
-            <span class="font-semibold">Rate:</span>
-            <div class="flex">
-
-              <span
-      v-for="star in 5"
-      :key="star"
-      :class="{
-        'text-yellow-400': recipe.currentRating >= star,
-        'text-gray-400': recipe.currentRating < star,
-      }"
-      class="cursor-pointer text-2xl"
-      @click="handleRating(index, star)"
-    >
-      ★
-    </span>
-            
-  </div>
-  <span class="ml-2 text-sm text-gray-600">({{ recipe.rating.toFixed(1) }} / 5)</span>
-  <span v-if="recipe.hasRated" class="ml-2 text-sm text-green-500">
-    You rated this recipe: {{ recipe.currentRating }}
-  </span>
-          
-</div>
+        <!-- Rating Section -->
+        <div class="flex items-center space-x-1 mb-4">
+          <span class="font-semibold">Rate:</span>
+          <div class="flex">
+            <span
+              v-for="star in 5"
+              :key="star"
+              :class="{
+                'text-yellow-400': recipe.currentRating >= star,
+                'text-gray-400': recipe.currentRating < star,
+              }"
+              class="cursor-pointer text-2xl"
+              @click="handleRating(index, star)"
+            >
+              ★
+            </span>
+          </div>
+          <span class="ml-2 text-sm text-gray-600">({{ recipe.rating.toFixed(1) }} / 5)</span>
+          <span v-if="recipe.hasRated" class="ml-2 text-sm text-green-500">
+            You rated this recipe: {{ recipe.currentRating }}
+          </span>
         </div>
 
         <!-- Comments Section -->
@@ -103,6 +103,7 @@
             </button>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -120,6 +121,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { useRouter } from 'vue-router';
