@@ -193,7 +193,7 @@ const logout = () => {
   authStore.isAuthenticated = false;
   localStorage.removeItem('token');
   sessionStorage.clear();
-  router.push('/');
+  router.push('/login');
 };
 
 const isLoginOrSignupPage = computed(() =>
