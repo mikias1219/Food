@@ -1,25 +1,40 @@
 <template>
   <nav class="fixed top-12 left-0 w-full bg-green-500 p-4 md:p-6 z-10">
     <div class="container mx-auto flex justify-between items-center">
-      <ul class="flex flex-wrap gap-4 md:gap-6 text-lg text-white">
-        <li
-          v-for="category in categories"
-          :key="category.id"
-          class="hover:text-blue-300 cursor-pointer"
-          @click="handleCategoryClick(category.name)"
+      <div class="relative group">
+        <!-- Button to toggle dropdown -->
+        <button 
+          class="text-white bg-green-600 px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300"
         >
-          {{ category.name }}
-        </li>
-      </ul>
+          Categories
+        </button>
+        
+        <!-- Dropdown menu -->
+        <ul 
+          v-if="categories.length"
+          class="absolute mt-2 bg-white text-green-700 shadow-lg rounded-lg py-2 w-48"
+        >
+          <li
+            v-for="category in categories"
+            :key="category.id"
+            class="px-4 py-2 hover:bg-green-100 cursor-pointer"
+            @click="handleCategoryClick(category.name)"
+          >
+            {{ category.name }}
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
 
 <script setup>
-  import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import { ref, computed, watch } from 'vue';
 import { useCategoryStore } from '@/stores/categoryStore'; // Assuming Pinia is used
+
 const router = useRouter();
 
 // GraphQL query to fetch categories
@@ -43,7 +58,7 @@ watch(
   () => result.value?.categories,
   (newCategories) => {
     if (newCategories) {
-      categoryStore.setCategories(newCategories.map((category) => category.name));
+      categoryStore.setCategories(newCategories);
     }
   },
   { immediate: true }
@@ -58,9 +73,15 @@ const handleCategoryClick = (categoryName) => {
   categoryStore.setSelectedCategory(categoryName); // Assuming your store has a `setSelectedCategory` method.
   router.push({ name: 'CategoryPage', params: { category: categoryName } });
 };
-
 </script>
 
 <style scoped>
-/* Add any additional custom styles if needed */
+/* Additional styling for dropdown */
+.relative:hover ul {
+  display: block;
+}
+
+ul {
+  display: none;
+}
 </style>

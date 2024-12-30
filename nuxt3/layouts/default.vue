@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- Always Visible FoodRecipes Link -->
-    <header class="left-0 bg-green-500 shadow-md fixed w-full z-0">
+    <!-- Modern Header with Dropdown Menus -->
+    <header class="fixed top-0 left-0 w-full bg-green-500 shadow-md z-50">
       <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-        <!-- Logo: Always Visible -->
+        <!-- Logo -->
         <div>
           <a
             href="#"
@@ -16,7 +16,7 @@
 
         <!-- Conditionally Visible Header Content -->
         <div v-if="!isLoginOrSignupPage" class="flex-1 flex justify-between items-center">
-          <!-- Filter + Search Bar -->
+          <!-- Filter and Search Section -->
           <div class="flex items-center flex-1 mx-4">
             <!-- Filter Dropdown -->
             <div class="relative mr-4">
@@ -45,28 +45,12 @@
                 class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
               >
                 <ul class="py-2 text-sm text-gray-700">
-                  <li>
+                  <li v-for="filter in filters" :key="filter">
                     <button
                       class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                      @click="applyFilter('Vegetarian')"
+                      @click="applyFilter(filter)"
                     >
-                      Vegetarian
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                      @click="applyFilter('Non-Vegetarian')"
-                    >
-                      Non-Vegetarian
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                      @click="applyFilter('Vegan')"
-                    >
-                      Vegan
+                      {{ filter }}
                     </button>
                   </li>
                 </ul>
@@ -114,7 +98,6 @@
                 @mouseleave="showAccountDropdown = false"
               >
                 <button
-                  @click="toggleAccountDropdown"
                   class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none"
                 >
                   <img
@@ -122,37 +105,21 @@
                     alt="Profile"
                     class="w-8 h-8 rounded-full mr-2"
                   />
-                  My Account
+                  <span>{{ authStore.user?.name || 'My Account' }}</span>
                 </button>
-                <!-- Dropdown Menu with Transition -->
-                <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+                <!-- Dropdown Menu -->
+                <transition name="fade">
                   <div
                     v-if="showAccountDropdown"
                     class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
                   >
                     <ul class="py-2 text-sm text-gray-700">
-                      <li>
+                      <li v-for="(action, key) in userActions" :key="key">
                         <button
                           class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                          @click="navigateTo('/myrecipes')"
+                          @click="navigateTo(action.route)"
                         >
-                          My Recipes
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                          @click="navigateTo('/create-recipe')"
-                        >
-                          Create Recipe
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                          @click="navigateTo('/profile')"
-                        >
-                          My Profile
+                          {{ action.label }}
                         </button>
                       </li>
                       <li>
@@ -177,37 +144,17 @@
     <main class="container mx-auto py-24">
       <NuxtPage />
     </main>
-<!-- Footer -->
-<footer class="bg-gray-800 text-white py-6">
-  <div class="container mx-auto">
-    <!-- Footer Content -->
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <!-- About Us -->
-      <div class="mb-4 md:mb-0">
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <p class="text-sm">&copy; 2024 FoodRecipes. All rights reserved.</p>
-        <p class="text-sm">
+        <div class="flex space-x-4">
           <a href="#about" class="hover:text-blue-400">About Us</a>
-        </p>
+          <a href="#top" class="hover:text-blue-400">Back to Top</a>
+        </div>
       </div>
-
-      <!-- Social Media Links -->
-      <div class="flex space-x-4 mb-4 md:mb-0">
-        <a href="https://facebook.com" target="_blank" class="hover:text-blue-400">Facebook</a>
-        <a href="https://linkedin.com/in/telaynew-ambachew" target="_blank" class="hover:text-blue-400">LinkedIn</a>
-        <a href="https://instagram.com" target="_blank" class="hover:text-pink-400">Instagram</a>
-        <a href="https://twitter.com" target="_blank" class="hover:text-blue-300">Twitter</a>
-      </div>
-
-      <!-- Navigation Links -->
-      <div class="flex space-x-4">
-        <a href="#recipes" class="hover:text-blue-400">FoodRecipes</a>
-        <a href="#top" class="hover:text-blue-400">Back to Top</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
+    </footer>
   </div>
 </template>
 
@@ -225,11 +172,21 @@ const route = useRoute();
 const showFilter = ref(false);
 const showAccountDropdown = ref(false);
 
+const filters = ['Vegetarian', 'Non-Vegetarian', 'Vegan'];
+const userActions = [
+  { label: 'My Recipes', route: '/myrecipes' },
+  { label: 'Create Recipe', route: '/create-recipe' },
+  { label: 'My Profile', route: '/profile' },
+];
+
 const navigateToHome = () => router.push('/');
 const goToSignup = () => router.push('/signup');
 const goToLogin = () => router.push('/login');
 const toggleFilter = () => (showFilter.value = !showFilter.value);
-const applyFilter = (filterType) => (showFilter.value = false);
+const applyFilter = (filterType) => {
+  console.log(`Filter applied: ${filterType}`);
+  showFilter.value = false;
+};
 const searchRecipes = () => console.log('Search query:', recipeStore.searchQuery);
 const logout = () => {
   authStore.setUser(null);
@@ -239,34 +196,14 @@ const logout = () => {
   router.push('/');
 };
 
-const toggleAccountDropdown = () => {
-  showAccountDropdown.value = !showAccountDropdown.value;
-};
-
 const isLoginOrSignupPage = computed(() =>
   ['/login', '/signup', '/recipeDetail'].includes(route.path)
 );
-
-// Transition Methods for Smooth Dropdown
-const beforeEnter = (el) => {
-  el.style.opacity = 0;
-  el.style.transition = 'opacity 0.5s ease';
-};
-
-const enter = (el) => {
-  el.offsetHeight; // Trigger reflow
-  el.style.opacity = 1;
-};
-
-const leave = (el) => {
-  el.style.opacity = 0;
-};
 </script>
 
 <style scoped>
-/* Optional: Additional styles for smooth transitions */
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.000005s ease;
+  transition: opacity 0.5s ease;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;

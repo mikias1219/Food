@@ -1,115 +1,131 @@
 <template>
-   <div class="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+  <div class="w-full h-screen p-6 bg-gray-50 shadow-md rounded-lg mt-10 overflow-auto">
     <!-- Display All Recipes -->
-    <div v-if="recipes.length" class="space-y-8">
-      <div v-for="(recipe, index) in recipes" :key="recipe.id" class="border-b pb-6">
-        <!-- Recipe Title -->
-        <h2 class="text-2xl font-bold mb-4">{{ recipe.title }}</h2>
+    <div v-if="filteredRecipes.length" class="space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          v-for="(recipe, index) in filteredRecipes"
+          :key="recipe.id"
+          class="border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300"
+        >
+          <!-- Recipe Title -->
+          <h2 class="text-xl font-semibold mb-4 truncate">{{ recipe.title }}</h2>
 
-        <!-- Recipe Image -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <img 
+          <!-- Recipe Image -->
+          <img
             v-if="recipe.featured_image"
             :src="getImageUrl(recipe.featured_image)"
             alt="Recipe Image"
-            class="w-full h-40 object-cover rounded-lg mb-4"
+            class="w-full h-56 object-cover rounded-lg mb-4 cursor-pointer"
+            @click="navigateToDetails(recipe.id)"
           />
-        </div>
 
-        <!-- Buttons Section -->
-        <div class="flex flex-wrap justify-start gap-6 mb-4 items-center">
-          <!-- Like Button -->
-          <button
-            @click="handleLike(index)"
-            :class="{ 'text-blue-500 font-bold': recipe.liked, 'text-gray-600': !recipe.liked }"
-            class="flex items-center space-x-2"
-          >
-            <span>👍</span>
-            <span>{{ recipe.liked ? 'Liked' : 'Like' }}</span>
-            <span>({{ recipe.likesCount }})</span>
-          </button>
-
-          <!-- Comments Button -->
-          <button 
-            @click="toggleComments(index)"
-            class="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
-          >
-            <span>💬</span>
-            <span>Comments</span>
-            <span>({{ recipe.commentsCount }})</span>
-          </button>
-
-          <!-- Bookmark Button -->
-          <button
-            @click="handleBookmark(index)"
-            :class="{ 'text-yellow-500': recipe.bookmarked, 'text-gray-600': !recipe.bookmarked }"
-            class="flex items-center space-x-2"
-          >
-            <span>🔖</span>
-            <span>{{ recipe.bookmarked ? 'Bookmarked' : 'Bookmark' }}</span>
-          </button>
-
-          <!-- Buy Recipe Button -->
-          <button
-            @click="redirectToPaymentPage(recipe)"
-            class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full transition duration-200 hover:bg-green-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400"
-          >
-            Buy Recipe
-          </button>
-        </div>
-
-        <!-- Rating Section -->
-        <div class="flex items-center space-x-1 mb-4">
-          <span class="font-semibold">Rate:</span>
-          <div class="flex">
-            <span
-              v-for="star in 5"
-              :key="star"
-              :class="{
-                'text-yellow-400': recipe.currentRating >= star,
-                'text-gray-400': recipe.currentRating < star,
-              }"
-              class="cursor-pointer text-2xl"
-              @click="handleRating(index, star)"
-            >
-              ★
-            </span>
-          </div>
-          <span class="ml-2 text-sm text-gray-600">({{ recipe.rating.toFixed(1) }} / 5)</span>
-          <span v-if="recipe.hasRated" class="ml-2 text-sm text-green-500">
-            You rated this recipe: {{ recipe.currentRating }}
-          </span>
-        </div>
-
-        <!-- Comments Section -->
-        <div v-if="recipe.showComments" class="mt-4">
-          <h3 class="text-lg font-semibold mb-2">Comments</h3>
-          <div v-for="(comment, i) in recipe.comments" :key="i" class="p-2 border-b">
-            <p>{{ comment.text }}</p>
-          </div>
-          <div class="mt-2">
-            <textarea
-              v-model="recipe.newComment"
-              placeholder="Write a comment..."
-              class="w-full p-2 border rounded"
-            ></textarea>
+          <!-- Buttons Section -->
+          <div class="flex justify-between mb-4 items-center">
+            <!-- Like Button -->
             <button
-              @click="addComment(index)"
-              class="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600"
+              @click="handleLike(index)"
+              :class="{
+                'text-blue-500 font-bold': recipe.liked,
+                'text-gray-600': !recipe.liked
+              }"
+              class="flex items-center space-x-2 text-sm"
             >
-              Submit Comment
+              <span>👍</span>
+              <span>{{ recipe.liked ? 'Liked' : 'Like' }}</span>
+              <span>({{ recipe.likesCount }})</span>
+            </button>
+
+            <!-- Comments Button -->
+            <button
+              @click="toggleComments(index)"
+              class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-800"
+            >
+              <span>💬</span>
+              <span>Comments</span>
+              <span>({{ recipe.commentsCount }})</span>
+            </button>
+
+            <!-- Bookmark Button -->
+            <button
+              @click="toggleBookmark(recipe.id, index)"
+              :class="{
+                'text-yellow-500': recipe.bookmarked,
+                'text-gray-600': !recipe.bookmarked
+              }"
+              class="text-sm"
+            >
+              {{ recipe.bookmarked ? 'Bookmarked' : 'Bookmark' }}
             </button>
           </div>
-        </div>
+          <button
+  @click="redirectToPaymentPage(recipe)"
+  class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full transition duration-200 hover:bg-green-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400"
+>
+  Buy Recipe
+</button>
 
+          <!-- Rating Section -->
+          <div class="flex items-center space-x-1 mb-4">
+            <span class="font-semibold text-sm">Rate:</span>
+            <div class="flex space-x-1">
+              <span
+                v-for="star in 5"
+                :key="star"
+                :class="{
+                  'text-yellow-400': recipe.currentRating >= star,
+                  'text-gray-400': recipe.currentRating < star
+                }"
+                class="cursor-pointer text-lg"
+                @click="handleRating(index, star)"
+              >
+                ★
+              </span>
+            </div>
+            <span
+              v-if="recipe.hasRated"
+              class="ml-2 text-sm text-green-500"
+            >
+              You rated: {{ recipe.currentRating }}
+            </span>
+          </div>
+
+          <!-- Comments Section -->
+          <div v-if="recipe.showComments" class="mt-4">
+            <h3 class="text-lg font-semibold mb-2">Comments</h3>
+            <div
+              v-for="(comment, i) in recipe.comments"
+              :key="i"
+              class="p-2 border-b text-sm"
+            >
+              <p>{{ comment.text }}</p>
+            </div>
+            <div v-if="isAuthenticated" class="mt-2">
+              <textarea
+                v-model="recipe.newComment"
+                placeholder="Write a comment..."
+                class="w-full p-2 border rounded text-sm"
+              ></textarea>
+              <button
+                @click="addComment(index)"
+                class="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600 text-sm"
+              >
+                Submit Comment
+              </button>
+            </div>
+            <div v-else class="text-sm text-gray-600">
+              Log in to add a comment.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- No Recipes Available -->
-    <div v-else>
-      <p class="text-center">No recipes available.</p>
+    <div v-else class="text-center py-10">
+      <p class="text-gray-500">No recipes available.</p>
     </div>
-     </div>
+  </div>
 </template>
 
 
@@ -137,6 +153,15 @@ const getImageUrl = (path) => {
 const isAuthenticated = computed(() => authStore.isAuthenticated); // Reactive check for authentication
 
 const backendBaseUrl = 'http://localhost:8085/';
+const redirectToPaymentPage = (recipe) => {
+  if (!isAuthenticated.value) {
+    alert('Please log in to proceed with the purchase.');
+    return;
+  }
+
+  // You can pass the recipe details or id to the payment page
+  router.push({ name: 'payment', query: { recipeId: recipe.id } });
+};
 
 const searchQuery = computed({
   get: () => recipeStore.searchQuery,
