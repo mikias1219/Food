@@ -1,45 +1,37 @@
 <template>
   <div>
-    <!-- Modern Header with Dropdown Menus -->
+    <!-- Header with Dropdown Menus -->
     <header class="fixed top-0 left-0 w-full bg-green-500 shadow-md z-50">
       <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
         <!-- Logo -->
-        <div>
-          <a
-            href="#"
-            class="text-xl font-bold italic text-red-800 hover:text-blue-600"
-            @click.prevent="navigateToHome"
-          >
-            FoodRecipes
-          </a>
-        </div>
+        <a
+          href="#"
+          class="text-xl font-bold italic text-red-800 hover:text-blue-600"
+          @click.prevent="navigateToHome"
+        >
+          FoodRecipes
+        </a>
 
-        <!-- Conditionally Visible Header Content -->
-        <div v-if="!isLoginOrSignupPage" class="flex-1 flex justify-between items-center">
-          <!-- Filter and Search Section -->
-          <div class="flex items-center flex-1 mx-4">
-            <!-- Filter Dropdown -->
-            <div class="relative mr-4">
-              <button
-                @click="toggleFilter"
-                class="flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300 hover:bg-gray-100"
+        <!-- Header Content -->
+        <div v-if="!isLoginOrSignupPage" class="flex items-center space-x-6">
+          <!-- Filter Section -->
+          <div class="relative">
+            <button
+              @click="toggleFilter"
+              class="flex items-center px-4 py-2 border border-gray-300 rounded-lg focus:outline-none hover:bg-gray-200"
+            >
+              Filter
+              <span
+                :class="{
+                  'transform rotate-180': showFilter,
+                  'transform rotate-0': !showFilter,
+                }"
+                class="ml-2 transition-transform duration-300"
               >
-                <span class="mr-2">Filter</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 3c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5H9c-.828 0-1.5-.672-1.5-1.5V4.5C7.5 3.672 8.172 3 9 3h3zM15 3c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5H9c-.828 0-1.5-.672-1.5-1.5V4.5C7.5 3.672 8.172 3 9 3h6z"
-                  />
-                </svg>
-              </button>
+                ▼
+              </span>
+            </button>
+            <transition name="fade">
               <div
                 v-if="showFilter"
                 class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
@@ -55,86 +47,88 @@
                   </li>
                 </ul>
               </div>
-            </div>
-
-            <!-- Search Bar -->
-            <form class="relative flex-1" @submit.prevent="searchRecipes">
-              <input
-                v-model="recipeStore.searchQuery"
-                type="text"
-                placeholder="Search recipes..."
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
-              />
-              <button
-                type="submit"
-                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-gray-800"
-              >
-                🔍
-              </button>
-            </form>
+            </transition>
           </div>
 
-          <!-- Authentication Section -->
-          <div class="flex items-center space-x-4">
-            <template v-if="!authStore.isAuthenticated">
-              <button
-                class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none"
-                @click="goToSignup"
-              >
-                Signup
-              </button>
-              <button
-                class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600 focus:outline-none"
-                @click="goToLogin"
-              >
-                Login
-              </button>
-            </template>
+          <!-- Search Section -->
+          <form class="relative flex-1" @submit.prevent="searchRecipes">
+            <input
+              v-model="recipeStore.searchQuery"
+              type="text"
+              placeholder="Search recipes..."
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+            />
+            <button
+              type="submit"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-gray-800"
+            >
+              🔍
+            </button>
+          </form>
 
-            <template v-else>
-              <div
-                class="relative group"
-                @mouseenter="showAccountDropdown = true"
-                @mouseleave="showAccountDropdown = false"
+          <!-- Account Dropdown -->
+          <div class="relative" v-if="authStore.isAuthenticated">
+            <button
+              class="flex items-center px-4 py-2 bg-gray-200 rounded-lg focus:outline-none hover:bg-gray-300"
+              @click="toggleDropdown"
+            >
+              <img
+                :src="authStore.user?.profilePicture || '/default-avatar.png'"
+                alt="Profile"
+                class="w-8 h-8 rounded-full mr-2"
+              />
+              {{ authStore.user?.name || 'My Account' }}
+              <span
+                :class="{
+                  'transform rotate-180': showAccountDropdown,
+                  'transform rotate-0': !showAccountDropdown,
+                }"
+                class="ml-2 transition-transform duration-300"
               >
-                <button
-                  class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none"
-                >
-                  <img
-                    :src="authStore.user?.profilePicture || '/default-avatar.png'"
-                    alt="Profile"
-                    class="w-8 h-8 rounded-full mr-2"
-                  />
-                  <span>{{ authStore.user?.name || 'My Account' }}</span>
-                </button>
-                <!-- Dropdown Menu -->
-                <transition name="fade">
-                  <div
-                    v-if="showAccountDropdown"
-                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
-                  >
-                    <ul class="py-2 text-sm text-gray-700">
-                      <li v-for="(action, key) in userActions" :key="key">
-                        <button
-                          class="w-full px-4 py-2 hover:bg-gray-100 text-left"
-                          @click="navigateTo(action.route)"
-                        >
-                          {{ action.label }}
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="w-full px-4 py-2 text-red-500 hover:bg-gray-100 text-left"
-                          @click="logout"
-                        >
-                          Logout
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </transition>
+                ▼
+              </span>
+            </button>
+            <transition name="fade">
+              <div
+                v-if="showAccountDropdown"
+                class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
+              >
+                <ul class="py-2 text-sm text-gray-700">
+                  <li v-for="(action, key) in userActions" :key="key">
+                    <button
+                      class="w-full px-4 py-2 hover:bg-gray-100 text-left"
+                      @click="navigateTo(action.route)"
+                    >
+                      {{ action.label }}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="w-full px-4 py-2 text-red-500 hover:bg-gray-100 text-left"
+                      @click="logout"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
               </div>
-            </template>
+            </transition>
+          </div>
+
+          <!-- Login/Signup Buttons -->
+          <div v-else>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800"
+              @click="goToSignup"
+            >
+              Signup
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+              @click="goToLogin"
+            >
+              Login
+            </button>
           </div>
         </div>
       </nav>
@@ -145,7 +139,6 @@
       <NuxtPage />
     </main>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6">
       <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <p class="text-sm">&copy; 2024 FoodRecipes. All rights reserved.</p>
@@ -183,6 +176,7 @@ const navigateToHome = () => router.push('/');
 const goToSignup = () => router.push('/signup');
 const goToLogin = () => router.push('/login');
 const toggleFilter = () => (showFilter.value = !showFilter.value);
+const toggleDropdown = () => (showAccountDropdown.value = !showAccountDropdown.value);
 const applyFilter = (filterType) => {
   console.log(`Filter applied: ${filterType}`);
   showFilter.value = false;
@@ -192,7 +186,6 @@ const logout = () => {
   authStore.setUser(null);
   authStore.isAuthenticated = false;
   localStorage.removeItem('token');
-  sessionStorage.clear();
   router.push('/login');
 };
 
@@ -202,10 +195,25 @@ const isLoginOrSignupPage = computed(() =>
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s ease;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
+}
+/* Ensure the wrapper takes full screen height */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.min-h-screen {
+  min-height: 100vh; /* Full viewport height */
+}
+.flex-grow {
+  flex: 1; /* Allow main content to expand */
 }
 </style>
