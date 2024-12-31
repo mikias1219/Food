@@ -1,37 +1,41 @@
 <template>
-  <div class="container mx-auto py-8 px-4">
-    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Add Recipe with Details</h1>
+  <div class="container mx-auto py-10 px-6 max-w-4xl">
+    <h1 class="text-4xl font-extrabold text-center mb-10 text-gray-800">Create a New Recipe</h1>
 
-    <form @submit.prevent="submitRecipe" class="space-y-6 bg-white p-8 rounded-lg shadow-lg">
+    <form @submit.prevent="submitRecipe" class="space-y-8 bg-white p-10 rounded-xl shadow-xl">
+      <!-- Recipe Title -->
       <div>
-        <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
+        <label for="title" class="block text-lg font-semibold text-gray-700 mb-2">Title</label>
         <input
           v-model="form.title"
           id="title"
           type="text"
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
           placeholder="Enter recipe title"
           required
         />
       </div>
 
+      <!-- Recipe Description -->
       <div>
-        <label for="description" class="block text-gray-700 font-medium mb-2">Description</label>
+        <label for="description" class="block text-lg font-semibold text-gray-700 mb-2">Description</label>
         <textarea
           v-model="form.description"
           id="description"
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter recipe description"
+          rows="4"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+          placeholder="Briefly describe the recipe"
           required
         ></textarea>
       </div>
 
+      <!-- Category -->
       <div>
-        <label for="category" class="block text-gray-700 font-medium mb-2">Category</label>
+        <label for="category" class="block text-lg font-semibold text-gray-700 mb-2">Category</label>
         <select
           v-model="selectedCategory"
           id="category"
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
           @change="handleCategoryChange"
           required
         >
@@ -41,135 +45,144 @@
           </option>
           <option value="new">+ Add New Category</option>
         </select>
-        <div v-if="isAddingCategory" class="mt-4">
+        <div v-if="isAddingCategory" class="mt-4 flex items-center gap-4">
           <input
             v-model="newCategory"
             type="text"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
             placeholder="Enter new category name"
             required
           />
           <button
             @click.prevent="addNewCategory"
-            class="mt-2 bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"
+            class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition"
           >
-            Add Category
+            Add
           </button>
         </div>
       </div>
 
+      <!-- Preparation Time -->
       <div>
-        <label for="time" class="block text-gray-700 font-medium mb-2">Preparation Time (minutes)</label>
+        <label for="time" class="block text-lg font-semibold text-gray-700 mb-2">Preparation Time (minutes)</label>
         <input
           v-model="form.preparation_time"
           id="time"
           type="number"
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
           placeholder="Enter preparation time"
           required
         />
       </div>
 
+      <!-- Ingredients -->
       <div>
-        <label class="block text-gray-700 font-medium mb-2">Ingredients</label>
-        <div v-for="(ingredient, index) in form.ingredients" :key="index" class="flex gap-4 mb-4">
+        <label class="block text-lg font-semibold text-gray-700 mb-2">Ingredients</label>
+        <div v-for="(ingredient, index) in form.ingredients" :key="index" class="flex gap-4 items-center mb-4">
           <input
             v-model="ingredient.name"
             type="text"
-            class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
             placeholder="Ingredient name"
             required
           />
           <input
             v-model="ingredient.quantity"
             type="text"
-            class="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
             placeholder="Quantity (e.g., 1 tsp)"
             required
           />
           <button
             @click.prevent="removeIngredient(index)"
-            class="text-red-500 hover:text-red-700 transition"
+            class="text-red-500 hover:text-red-600 transition"
           >
             Remove
           </button>
         </div>
         <button
           @click.prevent="addIngredient"
-          class="text-blue-500 hover:text-blue-700 transition"
+          class="text-blue-600 hover:text-blue-800 font-semibold transition"
         >
           + Add Ingredient
         </button>
       </div>
 
+      <!-- Steps -->
       <div>
-        <label class="block text-gray-700 font-medium mb-2">Steps</label>
-        <div v-for="(step, index) in form.steps" :key="index" class="flex gap-4 mb-4">
+        <label class="block text-lg font-semibold text-gray-700 mb-2">Steps</label>
+        <div v-for="(step, index) in form.steps" :key="index" class="flex gap-4 items-start mb-4">
           <input
             v-model="step.step_number"
             type="number"
-            class="w-1/6 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Step #"
+            class="w-20 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+            placeholder="Step"
             required
           />
           <textarea
             v-model="step.description"
-            class="w-5/6 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows="2"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
             placeholder="Step description"
             required
           ></textarea>
           <button
             @click.prevent="removeStep(index)"
-            class="text-red-500 hover:text-red-700 transition"
+            class="text-red-500 hover:text-red-600 transition"
           >
             Remove
           </button>
         </div>
         <button
           @click.prevent="addStep"
-          class="text-blue-500 hover:text-blue-700 transition"
+          class="text-blue-600 hover:text-blue-800 font-semibold transition"
         >
           + Add Step
         </button>
       </div>
 
+      <!-- Recipe Image Upload -->
       <div>
-        <label class="block text-gray-700 font-medium mb-2">Upload Recipe Images</label>
-        <label
-          for="fileInput"
-          class="block w-full px-4 py-2 bg-blue-500 text-white text-center rounded-lg cursor-pointer hover:bg-blue-600 transition"
-        >
-          Choose File
-          <input
-            id="fileInput"
-            type="file"
-            class="hidden"
-            @change="handleFileChange"
-          />
-        </label>
-        <p class="text-sm text-gray-600 mt-2">Selected: {{ selectedFile?.name || 'None' }}</p>
-        <button
-          @click.prevent="uploadFile"
-          :disabled="!selectedFile"
-          class="mt-2 bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-        >
-          Upload Image
-        </button>
-        <p v-if="uploadStatus" class="text-sm text-gray-500 mt-2">{{ uploadStatus }}</p>
-      </div>
-
+    <label class="block text-lg font-semibold text-gray-700 mb-2">Upload Recipe Images</label>
+    <div class="flex flex-col sm:flex-row gap-4 items-center">
+      <label
+        for="fileInput"
+        class="bg-blue-500 text-white px-6 py-2 rounded-md cursor-pointer hover:bg-blue-600 transition"
+      >
+        Choose File
+        <input
+          id="fileInput"
+          type="file"
+          class="hidden"
+          @change="handleFileChange"
+        />
+      </label>
+      <p class="text-sm text-gray-500">Selected: {{ selectedFile?.name || 'None' }}</p>
+      <button
+        @click.prevent="uploadFile"
+        :disabled="!selectedFile"
+        class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+      >
+        Upload Image
+      </button>
+    </div>
+    <p v-if="uploadStatus" class="text-sm text-gray-600 mt-2">{{ uploadStatus }}</p>
+  </div>
+      <!-- Submit Button -->
       <button
         type="submit"
-        class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+        class="w-full bg-blue-500 text-white text-lg font-semibold px-6 py-3 rounded-md hover:bg-blue-600 transition"
       >
         Submit Recipe
       </button>
 
-      <p v-if="successMessage" class="text-green-500 mt-4">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</p>
+      <!-- Success and Error Messages -->
+      <p v-if="successMessage" class="text-green-600 text-center mt-4">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="text-red-600 text-center mt-4">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
+
 
 
 <script setup>
